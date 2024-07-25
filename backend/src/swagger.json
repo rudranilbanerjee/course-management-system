@@ -1,0 +1,501 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Your API",
+      "description": "Your API Documentation"
+    },
+    "host": "localhost:5000",
+    "basePath": "/api",
+    "schemes": ["http"],
+    "paths": {
+      "/auth/register": {
+        "post": {
+          "summary": "Register a new user",
+          "tags": ["Auth"],
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "User registration details",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string" },
+                  "password": { "type": "string" },
+                  "phone": { "type": "string" },
+                  "gender": { "type": "string" }
+                },
+                "required": ["name", "email", "password", "phone", "gender"]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful registration",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": { "type": "string" }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
+      },
+      "/auth/login": {
+        "post": {
+          "summary": "Login user",
+          "tags": ["Auth"],
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "User login details",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful login",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": { "type": "string" }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid credentials"
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
+      },
+      "/auth/register-member": {
+        "post": {
+          "summary": "Register a new member",
+          "tags": ["Auth"],
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Member registration details",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string" },
+                  "password": { "type": "string" },
+                  "phone": { "type": "string" },
+                  "gender": { "type": "string" }
+                },
+                "required": ["name", "email", "password", "phone", "gender"]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful member registration",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": { "type": "string" }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
+      },
+      "/courses/create-course": {
+        "post": {
+          "summary": "Create a new course",
+          "tags": ["Courses"],
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Course details",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "description": { "type": "string" }
+                },
+                "required": ["name", "description"]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful course creation",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "course": {
+                    "type": "object",
+                    "properties": {
+                      "name": { "type": "string" },
+                      "description": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
+      },
+      "/courses/list-course": {
+        "get": {
+          "summary": "List all courses",
+          "tags": ["Courses"],
+          "responses": {
+            "200": {
+              "description": "Successful retrieval of courses",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "description": { "type": "string" }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
+      },
+      "/courses/assign-course-member": {
+        "post": {
+          "summary": "Assign course to a member",
+          "tags": ["Courses"],
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Assignment details",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "courseId": { "type": "string" },
+                  "memberId": { "type": "string" }
+                },
+                "required": ["courseId", "memberId"]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful course assignment",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": { "type": "string" }
+                }
+              }
+            },
+            "404": {
+              "description": "Course or Member not found"
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
+      },
+      "/courses/unassigned-members/{courseId}": {
+        "get": {
+          "summary": "Get unassigned members for a course",
+          "tags": ["Courses"],
+          "parameters": [
+            {
+              "name": "courseId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful retrieval of unassigned members",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "email": { "type": "string" },
+                    "phone": { "type": "string" },
+                    "gender": { "type": "string" }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Course not found"
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
+      },
+      "/exams/create-exam": {
+        "post": {
+          "summary": "Create a new exam",
+          "tags": ["Exams"],
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Exam details",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "courseId": { "type": "string" },
+                  "name": { "type": "string" },
+                  "totalMarks": { "type": "number" },
+                  "passMark": { "type": "number" },
+                  "time": { "type": "number" },
+                  "questions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "questionText": { "type": "string" },
+                        "options": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "optionText": { "type": "string" },
+                              "isCorrect": { "type": "boolean" }
+                            }
+                          }
+                        },
+                        "marks": { "type": "number" }
+                      }
+                    }
+                  }
+                },
+                "required": ["courseId", "name", "totalMarks", "passMark", "time", "questions"]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful exam creation",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "exam": {
+                    "type": "object",
+                    "properties": {
+                      "courseId": { "type": "string" },
+                      "name": { "type": "string" },
+                      "totalMarks": { "type": "number" },
+                      "passMark": { "type": "number" },
+                      "time": { "type": "number" },
+                      "questions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "questionText": { "type": "string" },
+                            "options": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "optionText": { "type": "string" },
+                                  "isCorrect": { "type": "boolean" }
+                                }
+                              }
+                            },
+                            "marks": { "type": "number" }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
+      },
+      "/exams/exam-list-by-courseId/{courseId}": {
+        "get": {
+          "summary": "List exams by course ID",
+          "tags": ["Exams"],
+          "parameters": [
+            {
+              "name": "courseId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful retrieval of exams",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "totalMarks": { "type": "number" },
+                    "passMark": { "type": "number" },
+                    "time": { "type": "number" }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Course not found"
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
+      },
+      "/exams/submit-exam": {
+        "post": {
+          "summary": "Submit exam",
+          "tags": ["Exams"],
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Exam submission details",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "courseId": { "type": "string" },
+                  "examId": { "type": "string" },
+                  "answers": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "questionId": { "type": "string" },
+                        "selectedOption": { "type": "string" }
+                      }
+                    }
+                  }
+                },
+                "required": ["courseId", "examId", "answers"]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful exam submission",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "isSuccess": { "type": "boolean" },
+                  "result": {
+                    "type": "object",
+                    "properties": {
+                      "course": { "type": "string" },
+                      "exam": { "type": "string" },
+                      "user": { "type": "string" },
+                      "marksObtained": { "type": "number" },
+                      "pass": { "type": "boolean" }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
+      },
+      "/results": {
+        "get": {
+          "summary": "Get exam results",
+          "tags": ["Results"],
+          "responses": {
+            "200": {
+              "description": "Successful retrieval of results",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "course": { "type": "string" },
+                    "exam": { "type": "string" },
+                    "user": { "type": "string" },
+                    "marksObtained": { "type": "number" },
+                    "pass": { "type": "boolean" }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {},
+    "securityDefinitions": {
+      "Bearer": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  }
+  
