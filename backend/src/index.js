@@ -25,7 +25,7 @@ app.use(errorHandler);
 
 // Configure CORS middleware
 app.use(cors({
-    origin: 'http://localhost:5173', // Replace with your frontend URL
+    origin: true, // Replace with your frontend URL
     credentials: true, // Enable cookies to be sent
 }));
 

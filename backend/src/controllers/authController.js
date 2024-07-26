@@ -40,7 +40,7 @@ const register = async (req, res) => {
       { expiresIn: '1h' }
     );
 
-    res.cookie('token', token, { httpOnly: true});
+    res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'None'});
     res.status(201).json({ isSuccess:true, isRegister:true, userId:user._id, role:user.role, message: 'User registered successfully' });
 
   } catch (err) {
@@ -80,8 +80,8 @@ const login = async (req, res) => {
       { expiresIn: '5 days' }
     );
 
-    res.cookie('token', token, { httpOnly: true});
-    res.status(201).json({ isSuccess:true, isLogin:true, userId:user._id, role:user.role, message: 'User login successfully' });
+    res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'None'});
+    res.status(201).json({ isSuccess:true, isLogin:true, userId:user._id, role:user.role, message: 'User login successfully1' });
   } catch (err) {
     console.error(err.message);
     res.status(400).json({ isError:true, message: err.message });
